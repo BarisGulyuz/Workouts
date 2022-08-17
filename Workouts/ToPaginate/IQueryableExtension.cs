@@ -9,12 +9,12 @@ namespace Workouts.ToPaginate
 {
     public static class IQueryableExtension
     {
-        public static PaginateModel<T> Paginate<T>(this IQueryable<T> values, 
+        public static PaginateModel<T> Paginate<T>(this IQueryable<T> values,
                                                             int size, int page)
         {
-            int totalCount =  values.Count();
+            int totalCount = values.Count();
 
-            List<T> returnItems =  values
+            List<T> returnItems = values
                                 .Skip(size * (page - 1))
                                 .Take(size)
                                 .ToList();
@@ -27,8 +27,8 @@ namespace Workouts.ToPaginate
                 CurrentPage = page,
                 Size = size,
                 TotalPage = page,
-                HasNextPage = page == totalPages,
-                IsFırstPage = page == 1,
+                HasNextPage = !(page == totalPages),
+                IsFırstPage = (page == 1),
                 Value = returnItems
             };
 
