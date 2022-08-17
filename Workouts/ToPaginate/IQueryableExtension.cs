@@ -26,7 +26,7 @@ namespace Workouts.ToPaginate
                 TotalCount = totalCount,
                 CurrentPage = page,
                 Size = size,
-                TotalPage = page,
+                TotalPage = totalPages,
                 HasNextPage = !(page == totalPages),
                 IsFırstPage = (page == 1),
                 Value = returnItems
