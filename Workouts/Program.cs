@@ -50,10 +50,13 @@ mailSender.SendMail(mailReq);
 
 List<Currency> currencies2 = data.GetCurrenyData();
 
+int count = currencies.Count(x => x.Name == "a" && x.BanknoteSelling == "20" && x.BanknoteSelling.Contains("1"));
+
 List<ExpressionModel> expressionModels = new List<ExpressionModel>
 {
     new ExpressionModel() {ColumnName = "Name", OperatorEnum= OperatorEnum.Equal, Value = "a" },
-    new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Equal, Value="20"}
+    new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Equal, Value="20"},
+    new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Contains, Value="1"}
 };
 
 List<ExpressionModel> expressionModels1 = new List<ExpressionModel>
@@ -61,7 +64,7 @@ List<ExpressionModel> expressionModels1 = new List<ExpressionModel>
     new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Contains, Value="1"}
 };
 
-var expression = new MyExpression<Currency>().GetExpression(expressionModels);
+var expression = new MyExpression<Currency>(isAnd: true).GetExpression(expressionModels);
 List<Currency> newCurrencies = currencies2.AsQueryable().Where(expression).ToList();
 
 
