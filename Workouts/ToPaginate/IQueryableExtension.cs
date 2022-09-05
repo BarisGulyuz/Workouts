@@ -13,13 +13,12 @@ namespace Workouts.ToPaginate
                                                             int size, int page)
         {
             int totalCount = values.Count();
+            int totalPages = Convert.ToInt32(Math.Ceiling(totalCount / (double)size));
 
             List<T> returnItems = values
                                 .Skip(size * (page - 1))
                                 .Take(size)
                                 .ToList();
-
-            int totalPages = Convert.ToInt32(Math.Ceiling(totalCount / (double)size));
 
             PaginateModel<T> paginateModel = new PaginateModel<T>()
             {
