@@ -9,7 +9,6 @@ namespace Workouts
 {
     public class Data
     {
-
         public List<Currency> GetCurrenyData()
         {
             List<Currency> currencies = new List<Currency>

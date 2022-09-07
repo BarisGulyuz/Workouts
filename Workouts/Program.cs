@@ -64,12 +64,15 @@ List<ExpressionModel> expressionModels1 = new List<ExpressionModel>
     new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Contains, Value="1"}
 };
 
-var expression = new MyExpression<Currency>(isAnd: true).GetExpression(expressionModels);
+var expression = new MyExpression<Currency>(isAndConjunction: true).GetExpression(expressionModels);
 List<Currency> newCurrencies = currencies2.AsQueryable().Where(expression).ToList();
 
 
 var expression2 = new MyExpression<Currency>().GetExpression(expressionModels1);
 List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToList();
+
+//Exception
+var expression3 = new MyExpression<Currency>().GetExpression(new List<ExpressionModel>());
 
 
 #endregion

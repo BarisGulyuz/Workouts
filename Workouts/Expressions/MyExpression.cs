@@ -11,14 +11,14 @@ namespace Workouts.Expressions
     //not completed - on-progress
     public class MyExpression<T>
     {
-        public bool isAnd { get; set; } //make enum
+        public bool IsAndConjunction { get; set; } //make enum
         public MyExpression()
         {
-            isAnd = false;
+            IsAndConjunction = false;
         }
-        public MyExpression(bool isAnd)
+        public MyExpression(bool isAndConjunction)
         {
-            this.isAnd = isAnd;
+            this.IsAndConjunction = isAndConjunction;
         }
         public Expression<Func<T, bool>> GetExpression(List<ExpressionModel> expressionModels)
         {
@@ -28,7 +28,7 @@ namespace Workouts.Expressions
 
             if (expressions.Count == 0)
             {
-                throw new Exception("0 Expression Created");
+                throw new Exception($"0 Expression Created. Your List Can Be Empty");
             }
 
             Expression finalExpression = null;
@@ -40,7 +40,7 @@ namespace Workouts.Expressions
                 }
                 else
                 {
-                    if (isAnd)
+                    if (IsAndConjunction)
                     {
                         for (int i = 0; i < expressions.Count; i++)
                         {
