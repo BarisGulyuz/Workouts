@@ -72,9 +72,40 @@ var expression2 = new MyExpression<Currency>().GetExpression(expressionModels1);
 List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToList();
 
 //Exception
-var expression3 = new MyExpression<Currency>().GetExpression(new List<ExpressionModel>());
+//var expression3 = new MyExpression<Currency>().GetExpression(new List<ExpressionModel>());
 
 
 #endregion
+
+#region Equality
+//User u1 = new User
+//{
+//   Name =   "Baris",
+//   Mail = "bar.77@windowslive.com"
+//};
+
+//User u2 = new User
+//{
+//    Id = u1.Id,
+//    Name = u1.Name,
+//    Mail = u1.Mail
+//};
+
+//User u3 = u1;
+
+//User u4 = u1.ShallowCopy();
+
+//u1.Name = "baris";
+
+//bool isUser1And2Equal = u1.Equals(u2);
+//bool isUser1And3Equal = u1.Equals(u3);
+//bool isUSer1And4Equal = u1.Equals(u4);
+
+//Console.WriteLine(isUser1And2Equal);
+//Console.WriteLine(isUser1And3Equal);
+//Console.WriteLine(isUSer1And4Equal);
+#endregion
+
+
 
 Console.ReadKey();

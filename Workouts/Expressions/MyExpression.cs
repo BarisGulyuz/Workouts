@@ -22,55 +22,56 @@ namespace Workouts.Expressions
         }
         public Expression<Func<T, bool>> GetExpression(List<ExpressionModel> expressionModels)
         {
+            if (expressionModels.Count == 0 || expressionModels == null)
+            {
+                throw new Exception($"Expression Model Can Not Be Empty");
+            }
+
             ParameterExpression entityParameter = Expression.Parameter(typeof(T), "x");
 
             List<Expression> expressions = CreateExpression(expressionModels, entityParameter);
 
-            if (expressions.Count == 0)
-            {
-                throw new Exception($"0 Expression Created. Your List Can Be Empty");
-            }
+          
 
             Expression finalExpression = null;
-            if (expressions.Count > 0)
+
+            if (expressions.Count == 1)
             {
-                if (expressions.Count == 1)
+                finalExpression = expressions.FirstOrDefault();
+            }
+            else
+            {
+                if (IsAndConjunction)
                 {
-                    finalExpression = expressions.FirstOrDefault();
+                    for (int i = 0; i < expressions.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            finalExpression = Expression.AndAlso(expressions[i], expressions[i + 1]);
+                        }
+                        else if (i < expressions.Count - 1)
+                        {
+                            finalExpression = Expression.AndAlso(finalExpression, expressions[i + 1]);
+                        }
+                    }
                 }
                 else
                 {
-                    if (IsAndConjunction)
+                    for (int i = 0; i < expressions.Count; i++)
                     {
-                        for (int i = 0; i < expressions.Count; i++)
+                        if (i == 0)
                         {
-                            if (i == 0)
-                            {
-                                finalExpression = Expression.AndAlso(expressions[i], expressions[i + 1]);
-                            }
-                            else if (i < expressions.Count - 1)
-                            {
-                                finalExpression = Expression.AndAlso(finalExpression, expressions[i + 1]);
-                            }
+                            finalExpression = Expression.OrElse(expressions[i], expressions[i + 1]);
+                        }
+                        else if (i < expressions.Count - 1)
+                        {
+                            finalExpression = Expression.OrElse(finalExpression, expressions[i + 1]);
                         }
                     }
-                    else
-                    {
-                        for (int i = 0; i < expressions.Count; i++)
-                        {
-                            if (i == 0)
-                            {
-                                finalExpression = Expression.OrElse(expressions[i], expressions[i + 1]);
-                            }
-                            else if (i < expressions.Count - 1)
-                            {
-                                finalExpression = Expression.OrElse(finalExpression, expressions[i + 1]);
-                            }
-                        }
-                    }
-
                 }
+
             }
+
             return Expression.Lambda<Func<T, bool>>(finalExpression, entityParameter);
 
         }
