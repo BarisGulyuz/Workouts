@@ -55,8 +55,7 @@ int count = currencies.Count(x => x.Name == "a" && x.BanknoteSelling == "20" && 
 List<ExpressionModel> expressionModels = new List<ExpressionModel>
 {
     new ExpressionModel() {ColumnName = "Name", OperatorEnum= OperatorEnum.Equal, Value = "a" },
-    new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Equal, Value="20"},
-    new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Contains, Value="1"}
+    new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Equal, Value="20"}
 };
 
 List<ExpressionModel> expressionModels1 = new List<ExpressionModel>
@@ -106,6 +105,6 @@ List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToL
 //Console.WriteLine(isUSer1And4Equal);
 #endregion
 
-
+Workouts.ExcelReport.Reporter.ExporToExcel(data.GetCurrenyData());
 
 Console.ReadKey();
