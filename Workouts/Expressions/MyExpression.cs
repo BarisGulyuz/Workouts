@@ -31,8 +31,6 @@ namespace Workouts.Expressions
 
             List<Expression> expressions = CreateExpression(expressionModels, entityParameter);
 
-          
-
             Expression finalExpression = null;
 
             if (expressions.Count == 1)

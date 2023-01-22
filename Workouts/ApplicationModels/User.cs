@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Workouts.ApplicationModels
+﻿namespace Workouts.ApplicationModels
 {
     public class User
     {
@@ -17,8 +11,11 @@ namespace Workouts.ApplicationModels
         {
             return this.MemberwiseClone() as User;
         }
-
-        public override bool Equals(object? obj)
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object obj)
         {
             if (obj == null || obj.GetType() != typeof(User))
             {
@@ -40,8 +37,5 @@ namespace Workouts.ApplicationModels
                 return true;
             }
         }
-
-
-
     }
 }

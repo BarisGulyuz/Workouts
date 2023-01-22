@@ -14,7 +14,6 @@ namespace RabitMQ.Common
         private IConnection connection;
         private IConnection _connection => connection ?? CreateConnection();
 
-
         public RabbitMQFactory()
         {
             factory = new ConnectionFactory();
@@ -40,7 +39,7 @@ namespace RabitMQ.Common
         public void PublishMessage(string exchangeName, string routingKey, string message)
         {
             CreateQueue(routingKey);
-            _channel.QueueBind(routingKey, exchangeName, routingKey); //direct exhange routingKey = queueName
+            //_channel.QueueBind(routingKey, exchangeName, routingKey); //direct exhange routingKey = queueName
 
             var body = Encoding.UTF8.GetBytes(message);
             _channel.BasicPublish(exchangeName, routingKey, null, body);

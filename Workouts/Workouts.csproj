@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Workouts.DesignPatterns\Workouts.DesignPatterns.csproj" />
+  </ItemGroup>
+
 </Project>

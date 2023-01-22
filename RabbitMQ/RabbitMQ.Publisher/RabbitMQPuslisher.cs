@@ -17,7 +17,7 @@ namespace RabbitMQ.Publisher
 
             for (int i = 0; i < 100; i++)
             {
-                rabbitMQFactory.PublishMessage("DENEMEX", "Deneme", $"Mesaj {i}");
+                rabbitMQFactory.PublishMessage("", "Deneme", $"Mesaj {i}");
             }
         }
     }

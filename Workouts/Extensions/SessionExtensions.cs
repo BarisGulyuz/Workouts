@@ -16,7 +16,6 @@ namespace Workouts.Extensions
             session.SetString(key, serialized);
         }
         public static T Get<T>(this ISession session, string key) where T : class, new()
-
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;

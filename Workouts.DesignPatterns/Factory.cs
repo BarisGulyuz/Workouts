@@ -1,9 +1,9 @@
-﻿
-
-namespace Workouts.DesignPatterns
+﻿namespace Workouts.DesignPatterns
 {
-    public class Factory
+    public  class Factory
     {
 
     }
+
+
 }

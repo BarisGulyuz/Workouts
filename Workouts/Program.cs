@@ -10,6 +10,8 @@ using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Workouts.XML;
+using Workouts.DesignPatterns;
+using User = Workouts.ApplicationModels.User;
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -121,7 +123,7 @@ if (httpReqEnable)
 
     if (response.IsSuccessStatusCode)
     {
-        List<Post>? json = await response.Content.ReadFromJsonAsync<List<Post>>();
+        List<Post> json = await response.Content.ReadFromJsonAsync<List<Post>>();
     }
     else
     {
@@ -139,7 +141,7 @@ void TryCondition(Action action, bool condition)
         action();
     }
 }
-TryCondition( WriteLine, false);
+TryCondition(WriteLine, false);
 
 void WriteLine()
 {
@@ -150,17 +152,16 @@ void WriteLine()
 void Plus(int a, int b, Action<int> action = null)
 {
     int result = a + b;
-    if (action != null) 
+    if (action != null)
         action(result);
 }
 
 
-void SendResult (int item)
+void SendResult(int item)
 {
     Console.WriteLine("Result is {0}", item.ToString());
 }
 
-int x = 0;
 Plus(1, 2, SendResult);
 Plus(2, 3, (result) =>
 {
@@ -169,11 +170,27 @@ Plus(2, 3, (result) =>
 
 #endregion
 
-
+#region XML Search
 XMLWorkout xMLWorkout = new XMLWorkout();
 
 bool barisResult = xMLWorkout.IsNameExist("Baris");
 bool zeynepResult = xMLWorkout.IsNameExist("Zeynep");
+#endregion
 
+#region Signleton Test
+
+Console.WriteLine(SingletonClass.Instance.Method1());
+Console.WriteLine(SingletonClass.Instance.Method1());
+
+#endregion
+
+
+
+decimal a =Int64.MaxValue;
+decimal b = Int64.MaxValue;
+
+decimal c = a + b;
+
+Console.WriteLine(c.ToString());
 
 Console.ReadKey();
