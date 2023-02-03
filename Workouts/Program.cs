@@ -12,6 +12,13 @@ using System.Net.Http;
 using Workouts.XML;
 using Workouts.DesignPatterns;
 using User = Workouts.ApplicationModels.User;
+using System.Text;
+using Workouts.HttpClientX;
+using Workouts.RandomQuestions;
+using ObserverPatternLikeMediatR.Concrete;
+using ObserverPatternLikeMediatR.Interfaces;
+using System.Reflection;
+using static Workouts.ApplicationModels.ObserverPatternModel.ObserverPatternModel;
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -111,7 +118,7 @@ List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToL
 //Console.WriteLine(isUSer1And4Equal);
 #endregion
 
-Workouts.ExcelReport.Reporter.ExporToExcel(data.GetCurrenyData());
+Workouts.ExcelReport.Reporter.ExportToExcel(data.GetCurrenyData());
 
 #region HttpReq With Token
 if (httpReqEnable)
@@ -119,7 +126,7 @@ if (httpReqEnable)
     HttpClient client = new HttpClient();
     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + "sadasdasdasdasdldsadsa");
-    HttpResponseMessage response = await client.GetAsync("https://jsonplaceholder.typicode.com/posts/2131");
+    HttpResponseMessage response = await client.GetAsync("https://jsonplaceholder.typicode.com/posts");
 
     if (response.IsSuccessStatusCode)
     {
@@ -129,7 +136,15 @@ if (httpReqEnable)
     {
         Console.WriteLine(response.StatusCode);
     }
+
+
+    using (HttpClientService httpClient = new HttpClientService("https://jsonplaceholder.typicode.com/posts"))
+    {
+        List<Post> json = httpClient.SendRequest<List<Post>>(HttpMethod.Get);
+    }
 }
+
+
 #endregion
 
 #region Delegate - Action
@@ -185,12 +200,42 @@ Console.WriteLine(SingletonClass.Instance.Method1());
 #endregion
 
 
+//PasswordBuilder passwordBuilder = new PasswordBuilder();
 
-decimal a =Int64.MaxValue;
-decimal b = Int64.MaxValue;
 
-decimal c = a + b;
 
-Console.WriteLine(c.ToString());
+//Console.WriteLine(passwordBuilder.AddMultipleCharacterSet(requiredSmallCharacterQ: 1,
+//                                                          requiredBigCharacterQ: 1,
+//                                                          requiredNumberQ: 1,
+//                                                          requiredSpecialCharacterQ: 1,
+//                                                          passwordLength: 10).Build());
+//Console.WriteLine(passwordBuilder.AddMultipleCharacterSet(1, 1, 1, 1, 10).Build());
+//Console.WriteLine(passwordBuilder.AddMultipleCharacterSet(1, 1, 1, 1, 10).Build());
+//Console.WriteLine(passwordBuilder.AddMultipleCharacterSet(1, 1, 1, 1, 10).Build());
+
+
+//PasswordBuilder passwordBuilder1 = new PasswordBuilder();
+
+//Console.WriteLine(passwordBuilder.AddCharacterSet("ABC", 10).Build());
+
+
+#region Dependency Compiler 
+
+Compiler compiler = new();
+compiler.Compile();
+
+#endregion
+
+
+MyEventHandler eventHandler = new MyEventHandler(Assembly.GetExecutingAssembly());
+
+eventHandler.Notify(new UserCreated { Id = 1 });
+eventHandler.Notify(new UserCreated { Id = 2 });
 
 Console.ReadKey();
+
+
+
+
+
+

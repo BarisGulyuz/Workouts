@@ -1,19 +1,9 @@
-﻿using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClosedXML.Excel;
-using System.Reflection;
-
+﻿using ClosedXML.Excel;
 namespace Workouts.ExcelReport
 {
     public class Reporter
     {
-        public static bool ExporToExcel<T>(List<T> datas, string sheetName = "", string path = "")
+        public static bool ExportToExcel<T>(List<T> datas, string sheetName = "", string path = "")
         {
             if (string.IsNullOrEmpty(path)) path = "D:\\Codes\\";
             if (string.IsNullOrEmpty(sheetName)) sheetName = typeof(T).Name;

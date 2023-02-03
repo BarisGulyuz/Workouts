@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.DesignPatterns", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQ", "RabbitMQ", "{C426AAB7-B013-4996-880B-6FEC615DFD93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabitMQ.Common", "RabbitMQ\RabitMQ.Common\RabitMQ.Common.csproj", "{FB970BF2-04FA-438D-83B2-BB44A386D2B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabitMQ.Common", "RabbitMQ\RabitMQ.Common\RabitMQ.Common.csproj", "{FB970BF2-04FA-438D-83B2-BB44A386D2B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Publisher", "RabbitMQ\RabbitMQ.Publisher\RabbitMQ.Publisher.csproj", "{C987AF35-F799-48AC-9741-74995A671349}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ.Publisher", "RabbitMQ\RabbitMQ.Publisher\RabbitMQ.Publisher.csproj", "{C987AF35-F799-48AC-9741-74995A671349}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Consumer", "RabbitMQ\RabbitMQ.Consumer\RabbitMQ.Consumer.csproj", "{92C07B2A-D08A-4F1E-A1F2-9D00F6B6EC76}"
 EndProject

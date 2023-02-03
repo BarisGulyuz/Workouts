@@ -25,7 +25,7 @@ namespace Workouts.BackgroundServices
             {
                 await Task.Delay(1000);
 
-                //IServiceScope? scope = _serviceScope.CreateScope();
+                //using IServiceScope? scope = _serviceScope.CreateScope();
                 //DbContext context = scope.ServiceProvider.GetService<Context>();
 
                 Console.WriteLine("Hello Darling");
