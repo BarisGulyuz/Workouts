@@ -1,12 +1,18 @@
-﻿namespace Workouts.ApplicationModels
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using static Workouts.ListToHtmlTable.ListToHtmlExtension;
+
+namespace Workouts.ApplicationModels
 {
     public class User
     {
+        [HtmlTableColumnInfo(Order = 1, ColumnName = "Id")]
         public int Id { get; set; } = new Random().Next(1, 100);
+        [HtmlTableColumnInfo(Order = 1, ColumnName = "Adı")]
         public string Name { get; set; }
+        [HtmlTableColumnInfo(Order = 1, ColumnName = "Mail Adresi")]
         public string Mail { get; set; }
 
-       
+
         public User ShallowCopy()
         {
             return this.MemberwiseClone() as User;

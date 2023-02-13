@@ -19,6 +19,7 @@ using ObserverPatternLikeMediatR.Concrete;
 using ObserverPatternLikeMediatR.Interfaces;
 using System.Reflection;
 using static Workouts.ApplicationModels.ObserverPatternModel.ObserverPatternModel;
+using Workouts.ListToHtmlTable;
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -227,12 +228,18 @@ compiler.Compile();
 #endregion
 
 
-MyEventHandler eventHandler = new MyEventHandler(Assembly.GetExecutingAssembly());
+//MyEventHandler eventHandler = new MyEventHandler(Assembly.GetExecutingAssembly());
 
-eventHandler.Notify(new UserCreated { Id = 1 });
-eventHandler.Notify(new UserCreated { Id = 2 });
+//eventHandler.Notify(new UserCreated { Id = 1 });
+//eventHandler.Notify(new UserCreated { Id = 2 });
+
+string htmlCurrencyTable = data.GetCurrenyData().ToHtmlTable();
+string htmlUserTable = data.GetUserData().ToHtmlTable();
+
 
 Console.ReadKey();
+
+
 
 
 
