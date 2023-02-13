@@ -110,6 +110,7 @@ namespace Workouts.ListToHtmlTable
         }
 
         /// <summary>
+        /// usage in https://github.com/BarisGulyuz/Workouts/blob/master/Workouts/ApplicationModels/Post.cs
         /// Katılım alınamaz.
         /// Yalnızca propertyler üzerinde kullanılabilir.
         /// Html tablo oluşturmak için listesi oluşacak class'ın propertylerinde kullanılır.
