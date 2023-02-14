@@ -10,25 +10,33 @@ namespace Workouts.ListToHtmlTable
     public static class ListToHtmlExtension
     {
         #region Html Table Tags
-        private static string TableStartTag = "<table style='border-collapse: collapse; background-color: #fff;width: 100%; margin-top: 10px;'>";
+        private static string TableStartTag = "<table style='border-collapse: collapse; background-color: {0};width: {1}; margin-top: 10px;'>";
         private static string TableEndTag = "</table>";
-        private static string TrStartTag = "<tr style='border: 1px solid #bbb;padding: 10px 20px;text-align: center;'>";
+        private static string TrStartTag = "<tr style='border: 1px solid {0};padding: 10px 20px;text-align: center;'>";
         private static string TrEndTag = "</tr>";
-        private static string ThStartTag = "<th style='border: 1px solid #bbb;padding: 10px 20px;text-align: center; background-color: #A084DC; color: #fff; font-weight: 600;'>";
+        private static string ThStartTag = "<th style='border: 1px solid {0};padding: 10px 20px;text-align: center; background-color: {1}; color: {2}; font-weight: 600;'>";
         private static string ThEndTag = "</th>";
-        private static string TdStartTag = "<td style='border: 1px solid #bbb;padding: 10px 20px;text-align: center;'>";
+        private static string TdStartTag = "<td style='border: 1px solid {0};padding: 10px 20px;text-align: center;'>";
         private static string TdEndTag = "</td>";
         #endregion
 
         /// <summary>
         /// Verilen listeyi [HtmlTableColumnInfo] adlı attribute'u kullanarak html table oluşturur ve string string olarak döndürür.
         /// T nesnesinin html tablaya yansıması istenilen propertylerinde [HtmlTableColumnInfo] attribute'u kullanılmalıdır.
+        /// data.GetCurrenyData().ToHtmlTable(); -- data.GetCurrenyData().ToHtmlTable(tableHeadBgColor: "#6096B4");
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string ToHtmlTable<T>(this List<T> sourceData)
+        public static string ToHtmlTable<T>(this List<T> sourceData, string tableWidth = null, string tableBgColor = null, string tableHeadBgColor = null,
+                                                                     string tableHeadFontColor = null, string borderColor = null)
         {
+            if (string.IsNullOrEmpty(tableWidth)) tableWidth = "100%";
+            if (string.IsNullOrEmpty(tableBgColor)) tableBgColor = "#fff";
+            if (string.IsNullOrEmpty(tableHeadBgColor)) tableHeadBgColor = "#537FE7";
+            if (string.IsNullOrEmpty(tableHeadFontColor)) tableHeadFontColor = "#fff";
+            if (string.IsNullOrEmpty(borderColor)) borderColor = "#bbb";
+
             IEnumerable<PropertyInfo> targetProps = typeof(T).GetProperties().Where(p => Attribute.IsDefined(p, typeof(HtmlTableColumnInfo)));
 
             if (!targetProps.Any())
@@ -40,17 +48,17 @@ namespace Workouts.ListToHtmlTable
             foreach (PropertyInfo prop in targetProps)
             {
                 htmlTableInfoAttribute = prop.GetCustomAttribute(typeof(HtmlTableColumnInfo)) as HtmlTableColumnInfo;
-                tableInfoData.Add(new TableInfoModel(htmlTableInfoAttribute.Order, prop.Name, 
+                tableInfoData.Add(new TableInfoModel(htmlTableInfoAttribute.Order, prop.Name,
                                                      htmlTableInfoAttribute.ColumnName ?? prop.Name,
                                                      htmlTableInfoAttribute.DatePattern, htmlTableInfoAttribute.MoneyPattern));
             }
             tableInfoData = tableInfoData.OrderBy(d => d.Order).ToList();
 
             StringBuilder htmlTableBuilder = new StringBuilder();
-            htmlTableBuilder.Append(TableStartTag);
+            htmlTableBuilder.Append(string.Format(TableStartTag, tableBgColor, tableWidth));
 
-            CreateTableHead(htmlTableBuilder, tableInfoData);
-            CreateTableBody(htmlTableBuilder, tableInfoData, sourceData);
+            CreateTableHead(htmlTableBuilder, tableInfoData, borderColor, tableHeadBgColor, tableHeadFontColor);
+            CreateTableBody(htmlTableBuilder, tableInfoData, sourceData, borderColor);
 
             htmlTableBuilder.Append(TableEndTag);
 
@@ -62,12 +70,12 @@ namespace Workouts.ListToHtmlTable
         /// </summary>
         /// <param name="htmlTableBuilder"></param>
         /// <param name="tableInfoData"></param>
-        private static void CreateTableHead(StringBuilder htmlTableBuilder, List<TableInfoModel> tableInfoData)
+        private static void CreateTableHead(StringBuilder htmlTableBuilder, List<TableInfoModel> tableInfoData, string borderColor, string tableHeadBgColor, string tableHeadFontColor)
         {
-            htmlTableBuilder.Append(TrStartTag);
+            htmlTableBuilder.Append(string.Format(TrStartTag, borderColor));
             foreach (TableInfoModel tableInfo in tableInfoData)
             {
-                htmlTableBuilder.Append(ThStartTag);
+                htmlTableBuilder.Append(string.Format(ThStartTag, borderColor, tableHeadBgColor, tableHeadFontColor));
                 htmlTableBuilder.Append(tableInfo.ColumnName);
                 htmlTableBuilder.Append(ThEndTag);
             }
@@ -81,14 +89,14 @@ namespace Workouts.ListToHtmlTable
         /// <param name="htmlTableBuilder"></param>
         /// <param name="tableInfoData"></param>
         /// <param name="sourceData"></param>
-        private static void CreateTableBody<T>(StringBuilder htmlTableBuilder, List<TableInfoModel> tableInfoData, List<T> sourceData)
+        private static void CreateTableBody<T>(StringBuilder htmlTableBuilder, List<TableInfoModel> tableInfoData, List<T> sourceData, string borderColor)
         {
             foreach (T data in sourceData)
             {
-                htmlTableBuilder.Append(TrStartTag);
+                htmlTableBuilder.Append(string.Format(TrStartTag, borderColor));
                 foreach (TableInfoModel tableInfo in tableInfoData)
                 {
-                    htmlTableBuilder.Append(TdStartTag);
+                    htmlTableBuilder.Append(string.Format(TdStartTag, borderColor));
                     PropertyInfo prop = data.GetType().GetProperty(tableInfo.PropertyName);
                     object value = prop.GetValue(data);
 
@@ -111,7 +119,7 @@ namespace Workouts.ListToHtmlTable
 
         /// <summary>
         /// usage in https://github.com/BarisGulyuz/Workouts/blob/master/Workouts/ApplicationModels/Currency.cs
-        /// Katılım alınamaz.
+        /// Kalıtım alınamaz.
         /// Yalnızca propertyler üzerinde kullanılabilir.
         /// Html tablo oluşturmak için listesi oluşacak class'ın propertylerinde kullanılır.
         /// Money formatlanmak isteniyorsa MoneyPattern doldurulmalıdır.

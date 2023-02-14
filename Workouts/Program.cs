@@ -234,8 +234,9 @@ compiler.Compile();
 //eventHandler.Notify(new UserCreated { Id = 2 });
 
 string htmlCurrencyTable = data.GetCurrenyData().ToHtmlTable();
-string htmlUserTable = data.GetUserData().ToHtmlTable();
+string htmlCurencyTableColorod = data.GetCurrenyData().ToHtmlTable(tableHeadBgColor: "#6096B4");
 
+string allHtml = htmlCurrencyTable + htmlCurencyTableColorod;
 
 Console.ReadKey();
 

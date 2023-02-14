@@ -20,7 +20,7 @@ namespace Workouts.ApplicationModels
         [HtmlTableColumnInfo(Order = 2, ColumnName = "Satış", MoneyPattern = "C")]
         public string BanknoteSelling { get; set; }
 
-        [HtmlTableColumnInfo(Order = 2, ColumnName = "Tarih", DatePattern = "MM/dd/yyyy")]
+        [HtmlTableColumnInfo(Order = 3, ColumnName = "Tarih", DatePattern = "MM/dd/yyyy")]
         public DateTime Date { get; set; }
 
     }
