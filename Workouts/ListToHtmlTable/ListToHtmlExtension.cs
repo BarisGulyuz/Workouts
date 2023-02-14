@@ -105,7 +105,7 @@ namespace Workouts.ListToHtmlTable
                         value = ((DateTime)value).ToString(tableInfo.DatePattern);
                     }
                     else if ((prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(int) || prop.PropertyType == typeof(float))
-                        && !string.IsNullOrEmpty(tableInfo.DatePattern))
+                        && !string.IsNullOrEmpty(tableInfo.MoneyPattern))
                     {
                         value = Convert.ToDecimal(value).ToString(tableInfo.MoneyPattern);
                     }
