@@ -1,16 +1,21 @@
-﻿using Workouts.API.Attibutes;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using Workouts.API.Attibutes;
 
 namespace Workouts.API.Models
 {
     public class Product
     {
+        public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        [CustomRegex(RegexPattern ="2021|2022", Message ="Procution Year Can Be Only 2022 and 2023")]
+
+        //[CustomRegex(RegexPattern ="2021|2022", Message ="Procution Year Can Be Only 2022 and 2023")]
+        [RegularExpression("2022|20223")]
         public int ProductionYear { get; set; }
 
-
-        //must in another class or must be in pipeline etc.
+        public Category Category { get; set; }
 
         public bool Validate()
         {

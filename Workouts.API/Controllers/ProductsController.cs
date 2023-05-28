@@ -19,18 +19,18 @@ namespace Workouts.API.Controllers
         [HttpGet("{productId}")]
         public IActionResult GetProduct(int productId)
         {
-            throw new BusinessException("Server error occured", "U dont have right to do that");
+            throw new BusinessException("Server error occured");
         }
 
         [HttpPost("send")]
-        public IActionResult SendProduct([FromBody] Product product)
+        public IActionResult SerializeProduct([FromBody] Product product)
         {
             string stringProduct = JsonSerializer.Serialize(product);
             byte[] productByteArray = Encoding.UTF8.GetBytes(stringProduct);
             return Ok(productByteArray);
         }
         [HttpPost("send2")]
-        public IActionResult SendProduct([FromBody] byte[] product)
+        public IActionResult DeserializeProducts([FromBody] byte[] product)
         {
             Product productObject = JsonSerializer.Deserialize<Product>(product);
             return Ok(productObject);

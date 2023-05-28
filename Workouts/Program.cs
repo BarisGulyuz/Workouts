@@ -5,21 +5,15 @@ using Workouts.ToPaginate;
 using Workouts.Mail;
 using Workouts.Mail.DummyTemplate;
 using Workouts.Expressions;
-using System.Linq;
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
-using System.Net.Http;
 using Workouts.XML;
 using Workouts.DesignPatterns;
 using User = Workouts.ApplicationModels.User;
-using System.Text;
 using Workouts.HttpClientX;
 using Workouts.RandomQuestions;
-using ObserverPatternLikeMediatR.Concrete;
-using ObserverPatternLikeMediatR.Interfaces;
-using System.Reflection;
-using static Workouts.ApplicationModels.ObserverPatternModel.ObserverPatternModel;
 using Workouts.ListToHtmlTable;
+using Workouts.FileOperations;
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -119,7 +113,7 @@ List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToL
 //Console.WriteLine(isUSer1And4Equal);
 #endregion
 
-Workouts.ExcelReport.Reporter.ExportToExcel(data.GetCurrenyData());
+bool v = Workouts.ExcelReport.Reporter.ExportToExcel(data.GetCurrenyData());
 
 #region HttpReq With Token
 if (httpReqEnable)
@@ -201,6 +195,27 @@ Console.WriteLine(SingletonClass.Instance.Method1());
 #endregion
 
 
+int countst = 0;
+while (true)
+{
+    countst++;
+    Product product = new Product();
+
+   
+    var task1 = Task.Run(async () => { await product.AddStock(2); });
+    var task2 = Task.Run(async () => { await product.AddStock(3); });
+    var task3 = Task.Run(async () => { await product.RemoveStock(5); });
+
+    await Task.WhenAll(task1, task2, task3);
+
+    if (product.Stock != 0)
+    {
+        Console.WriteLine($"Error - {countst} *****   {product.Stock}");
+        break;
+    }
+}
+
+
 //PasswordBuilder passwordBuilder = new PasswordBuilder();
 
 
@@ -237,6 +252,12 @@ string htmlCurrencyTable = data.GetCurrenyData().ToHtmlTable();
 string htmlCurencyTableColorod = data.GetCurrenyData().ToHtmlTable(tableHeadBgColor: "#6096B4");
 
 string allHtml = htmlCurrencyTable + htmlCurencyTableColorod;
+
+B bInstance = new WorstContainer().GetIstance<B>();
+bInstance.AMethod();
+
+
+FileOperations.Word.FindAllWrongs("C:\\Users\\bar77\\OneDrive\\Masaüstü\\Proje.docx");
 
 Console.ReadKey();
 

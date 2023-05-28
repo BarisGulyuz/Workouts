@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
@@ -15,6 +21,15 @@
     <Folder Include="ScopedModels\" />
     <Folder Include="Validation\CustomValidation\" />
     <Folder Include="Validation\FluentValidation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="JuniorDev.EntityFrameworkCore">
+      <HintPath>..\..\JuniorDev\JuniorDev.EntityFrameworkCore\obj\Debug\net6.0\JuniorDev.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="JuniorDev.Kernel">
+      <HintPath>..\..\JuniorDev\JuniorDev.Kernel\obj\Debug\net6.0\JuniorDev.Kernel.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
