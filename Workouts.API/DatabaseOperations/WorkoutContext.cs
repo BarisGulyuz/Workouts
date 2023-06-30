@@ -9,7 +9,7 @@ namespace Workouts.API.DatabaseOperations
         // use another projects for workout WorkoutContext contex = new WorkoutContext("cnnStr");
         //public WorkoutContext(string connectringString)
         //{
-            
+
         //}
         public WorkoutContext(DbContextOptions<WorkoutContext> dbContextOptions) : base(dbContextOptions)
         {
@@ -17,6 +17,7 @@ namespace Workouts.API.DatabaseOperations
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

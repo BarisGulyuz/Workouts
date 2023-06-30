@@ -10,17 +10,12 @@ namespace Workouts.API.Filters
         {
             if (!context.ModelState.IsValid)
             {
-                //var errors = context.ModelState
-                //    .Where(p => p.Value.Errors.Any())
-                //    .ToDictionary(e => e.Key, e => e.Value.Errors.Select(s => s.ErrorMessage))
-                //    .ToArray();
-
                 List<string> errors = context.ModelState.Where(m => m.Value.Errors.Any())
                                                         .Select(x => x.Value.ToString())
                                                         .ToList();
 
-                Response<bool> response = new Response<bool>();
-                response.AddError(ResultType.ValidationException, errors);
+                Response response = new Response();
+                response.AddResult(ResultType.ValidationError, errors);
                 context.Result = new BadRequestObjectResult(response);
                 return;
             }

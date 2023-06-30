@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Workouts.Mail.DummyTemplate
+﻿namespace Workouts.Mail.DummyTemplate
 {
     public class Templates
     {

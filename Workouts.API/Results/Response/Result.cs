@@ -4,7 +4,7 @@
     {
         public Result()
         {
-
+            ResultType = ResultType.Info;
         }
         public Result(ResultType resultType, string message)
         {
@@ -19,11 +19,11 @@
 
     public enum ResultType
     {
-        BussinessException,
-        ValidationException,
+        Success,
         Info,
         Warning,
-        InternalServerError
-        //.......
+        Error,
+        ValidationError,
+        InternalServerError,
     }
 }

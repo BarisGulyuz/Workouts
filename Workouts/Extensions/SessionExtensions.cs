@@ -23,7 +23,7 @@ namespace Workouts.Extensions
             string value = session.GetString(key);
             if (value != null)
             {
-                T returnValue = JsonSerializer.Deserialize<T>(value);
+                T returnValue = JsonSerializer.Deserialize<T>(value, options);
                 return returnValue;
             }
 

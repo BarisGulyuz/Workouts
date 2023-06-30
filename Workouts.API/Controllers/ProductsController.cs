@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
+using Workouts.API.DatabaseOperations;
 using Workouts.API.Models;
-using Workouts.API.Results.Exceptions;
+using Workouts.API.Results.Response;
 
 namespace Workouts.API.Controllers
 {
@@ -10,30 +9,59 @@ namespace Workouts.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly WorkoutContext dbContext;
+
+        public ProductsController(WorkoutContext context)
+        {
+            dbContext = context;
+        }
+
         [HttpGet]
         public IActionResult GetProducts()
         {
-            throw new BusinessException("Server error occured");
+            var products = dbContext.Products.ToList();
+
+            //throw new BusinessException("Server error occured");
+            return Ok(Results.Response.Response<List<Product>>.CreateSuccessResponse(products, ""));
         }
 
-        [HttpGet("{productId}")]
-        public IActionResult GetProduct(int productId)
-        {
-            throw new BusinessException("Server error occured");
-        }
+        //[HttpGet("{productId}")]
+        //public IActionResult GetProduct(int productId)
+        //{
+        //    throw new BusinessException("Server error occured");
+        //}
 
-        [HttpPost("send")]
-        public IActionResult SerializeProduct([FromBody] Product product)
+        //[HttpPost("send")]
+        //public IActionResult SerializeProduct()
+        //{
+        //    var stackTrace = new StackTrace();
+
+        //    string stringProduct = JsonSerializer.Serialize(new Product());
+        //    byte[] productByteArray = Encoding.UTF8.GetBytes(stringProduct);
+
+        //    stackTrace.GetFrames();
+        //    return Ok(productByteArray);
+        //}
+        //[HttpPost("send2")]
+        //public IActionResult DeserializeProducts([FromBody] byte[] product)
+        //{
+        //    Product productObject = JsonSerializer.Deserialize<Product>(product);
+        //    return Ok(productObject);
+        //}
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync(int productId)
         {
-            string stringProduct = JsonSerializer.Serialize(product);
-            byte[] productByteArray = Encoding.UTF8.GetBytes(stringProduct);
-            return Ok(productByteArray);
-        }
-        [HttpPost("send2")]
-        public IActionResult DeserializeProducts([FromBody] byte[] product)
-        {
-            Product productObject = JsonSerializer.Deserialize<Product>(product);
-            return Ok(productObject);
+            Product product = dbContext.Products.FirstOrDefault(p => p.Id == productId);
+
+            if (product is not null)
+            {
+                dbContext.Products.Remove(product);
+                await dbContext.SaveChangesAsync();
+                return NoContent();
+            }
+
+            return BadRequest(new Response("Not Found", ResultType.Error));
         }
     }
 }

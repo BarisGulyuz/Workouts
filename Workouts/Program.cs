@@ -10,10 +10,12 @@ using System.Net.Http.Headers;
 using Workouts.XML;
 using Workouts.DesignPatterns;
 using User = Workouts.ApplicationModels.User;
-using Workouts.HttpClientX;
 using Workouts.RandomQuestions;
 using Workouts.ListToHtmlTable;
 using Workouts.FileOperations;
+using ObserverPatternLikeMediatR.Concrete;
+using static Workouts.ApplicationModels.ObserverPatternModel.ObserverPatternModel;
+using System.Reflection;
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -133,10 +135,10 @@ if (httpReqEnable)
     }
 
 
-    using (HttpClientService httpClient = new HttpClientService("https://jsonplaceholder.typicode.com/posts"))
-    {
-        List<Post> json = httpClient.SendRequest<List<Post>>(HttpMethod.Get);
-    }
+    //using (HttpClientService httpClient = new HttpClientService("https://jsonplaceholder.typicode.com/posts"))
+    //{
+    //    List<Post> json = httpClient.SendRequest<List<Post>>(HttpMethod.Get);
+    //}
 }
 
 
@@ -201,7 +203,7 @@ while (true)
     countst++;
     Product product = new Product();
 
-   
+
     var task1 = Task.Run(async () => { await product.AddStock(2); });
     var task2 = Task.Run(async () => { await product.AddStock(3); });
     var task3 = Task.Run(async () => { await product.RemoveStock(5); });
@@ -216,7 +218,8 @@ while (true)
 }
 
 
-//PasswordBuilder passwordBuilder = new PasswordBuilder();
+//Workouts.DesignPatterns.PatternWorkouts.Builder.PasswordBuilder passwordBuilder = new();
+//passwordBuilder.AddCharacterSet(Workouts.DesignPatterns.PatternWorkouts.Builder.PasswordCharacterType.All, 1);
 
 
 
@@ -243,10 +246,10 @@ compiler.Compile();
 #endregion
 
 
-//MyEventHandler eventHandler = new MyEventHandler(Assembly.GetExecutingAssembly());
+MyEventHandler eventHandler = new MyEventHandler(Assembly.GetExecutingAssembly());
 
-//eventHandler.Notify(new UserCreated { Id = 1 });
-//eventHandler.Notify(new UserCreated { Id = 2 });
+eventHandler.Notify(new UserCreated { Id = 1 });
+eventHandler.Notify(new UserCreated { Id = 2 }, false, (ex) => { Console.WriteLine(ex.ToString()); });
 
 string htmlCurrencyTable = data.GetCurrenyData().ToHtmlTable();
 string htmlCurencyTableColorod = data.GetCurrenyData().ToHtmlTable(tableHeadBgColor: "#6096B4");
@@ -257,7 +260,7 @@ B bInstance = new WorstContainer().GetIstance<B>();
 bInstance.AMethod();
 
 
-FileOperations.Word.FindAllWrongs("C:\\Users\\bar77\\OneDrive\\Masaüstü\\Proje.docx");
+//FileOperations.Word.FindAllWrongs("C:\\Users\\bar77\\OneDrive\\Masaüstü\\Proje.docx");
 
 Console.ReadKey();
 

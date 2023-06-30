@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Workouts.API.Results.Exceptions;
 using Workouts.API.Results.Response;
 
@@ -25,30 +22,30 @@ namespace Workouts.API.Middlewares
             }
             catch (Exception ex)
             {
+                var exceptionDetail = HandleException(ex);
 
                 httpContext.Response.ContentType = "application/json";
+                httpContext.Response.StatusCode = (int)exceptionDetail.HttpStatusCode;
 
-                Response<bool> contextResponse = new Response<bool>();
+                Response contextResponse = new Response();
+                contextResponse.AddResult(ResultType.Error, exceptionDetail.ExceptionMessage);
 
-                if (ex is BusinessException) CreateResponseForException(httpContext, ex, HttpStatusCode.BadRequest, contextResponse, ResultType.BussinessException);
-                else CreateResponseForException(httpContext, ex, HttpStatusCode.InternalServerError, contextResponse, ResultType.InternalServerError);
-
-                await httpContext.Response.WriteAsync(contextResponse.ToString());
+                await httpContext.Response.WriteAsJsonAsync(contextResponse);
             }
         }
 
-        private void CreateResponseForException(HttpContext httpContext, Exception ex, HttpStatusCode httpStatusCode, Response<bool> contextResponse, ResultType resultType)
+        private (string ExceptionMessage, HttpStatusCode HttpStatusCode) HandleException(Exception exception)
         {
-            httpContext.Response.StatusCode = (int)httpStatusCode;
-            if (ex.Data.Count > 0)
+            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+            string exceptionMessage = "Something wrong, internal server error occured";
+
+            if (exception is BusinessException || exception is ValidationException)
             {
-                List<string> errors = ex.Data.Values.Cast<string>().ToList();
-                contextResponse.AddError(ResultType.BussinessException, errors);
+                statusCode = HttpStatusCode.BadRequest;
+                exceptionMessage = String.Concat(exception.Data.Values);
             }
-            else if (!string.IsNullOrEmpty(ex.Message))
-            {
-                contextResponse.Results.Add(new Result { ResultType = resultType, Message = ex.Message });
-            }
+
+            return new(exceptionMessage, statusCode);
         }
     }
 

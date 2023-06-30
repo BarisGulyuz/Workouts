@@ -9,6 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.API", "Workouts.AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.DesignPatterns", "Workouts.DesignPatterns\Workouts.DesignPatterns.csproj", "{4F114146-EB3D-45AE-AD86-9950F059862A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.DataStructures", "Workouts.DataStructures\Workouts.DataStructures.csproj", "{EA3B8639-EB4D-45B9-8D09-7A356E96EB90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workouts.RabbitMQ", "Workouts.RabbitMQ\Workouts.RabbitMQ.csproj", "{1FE11164-B699-403D-AE07-A02BF1EC16D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workouts.SignalR", "Workouts.SignalR\Workouts.SignalR.csproj", "{11D2572A-7EF1-4386-85E5-EAA663B66966}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{9CFFAC72-C186-47EF-BAEF-FE314510196D}"
+	ProjectSection(SolutionItems) = preProject
+		UI\jquery.min.js = UI\jquery.min.js
+		UI\signalR.html = UI\signalR.html
+		UI\signalr.min.js = UI\signalr.min.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +40,18 @@ Global
 		{4F114146-EB3D-45AE-AD86-9950F059862A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F114146-EB3D-45AE-AD86-9950F059862A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F114146-EB3D-45AE-AD86-9950F059862A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA3B8639-EB4D-45B9-8D09-7A356E96EB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA3B8639-EB4D-45B9-8D09-7A356E96EB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA3B8639-EB4D-45B9-8D09-7A356E96EB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA3B8639-EB4D-45B9-8D09-7A356E96EB90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE11164-B699-403D-AE07-A02BF1EC16D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE11164-B699-403D-AE07-A02BF1EC16D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE11164-B699-403D-AE07-A02BF1EC16D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE11164-B699-403D-AE07-A02BF1EC16D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D2572A-7EF1-4386-85E5-EAA663B66966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D2572A-7EF1-4386-85E5-EAA663B66966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D2572A-7EF1-4386-85E5-EAA663B66966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D2572A-7EF1-4386-85E5-EAA663B66966}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

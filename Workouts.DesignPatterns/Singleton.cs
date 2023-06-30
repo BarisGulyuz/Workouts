@@ -1,6 +1,7 @@
 ﻿
 namespace Workouts.DesignPatterns
 {
+    //services.AddSingleton<SingletonClass>();
     /// <summary>
     /// Workouts.Program.cs sınıfında kullanıldı/kullanılacak
     /// </summary>
@@ -38,12 +39,13 @@ namespace Workouts.DesignPatterns
                 }
 
                 return instance;
+
+
             }
         }
 
         public int Method1() => 1;
     }
-
     public sealed class MySingleton
     {
         private static readonly Lazy<MySingleton> _mySingleton = new Lazy<MySingleton>(() => CreateInstance(), true);
@@ -57,9 +59,6 @@ namespace Workouts.DesignPatterns
             return new MySingleton();
         }
     }
-
-    //services.AddSingleton<SingletonClass>();
-
     public sealed class Singleton_
     {
         private static Singleton_ instance = new Singleton_();
@@ -72,11 +71,12 @@ namespace Workouts.DesignPatterns
 
         public static Singleton_ Instance => instance;
     }
-
     public interface ISingletonClass
     {
         int Method1();
     }
+
+
 }
 
 

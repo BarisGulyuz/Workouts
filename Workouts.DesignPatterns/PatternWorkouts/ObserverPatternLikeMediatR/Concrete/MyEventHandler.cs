@@ -22,8 +22,7 @@ namespace ObserverPatternLikeMediatR.Concrete
         {
             _assembly = assembly;
         }
-
-        public void Notify(IEvent @event, bool continueOnError = false)
+        public void Notify(IEvent @event, bool continueOnError = false, Action<Exception> exceptionHandler = null)
         {
             EventCollection currentEventInfo = EventCollection.FirstOrDefault(e => e.Event == @event.GetType());
             if (currentEventInfo == null)
@@ -38,7 +37,8 @@ namespace ObserverPatternLikeMediatR.Concrete
                 }
                 catch (Exception ex)
                 {
-                    //log
+                    if (exceptionHandler != null)
+                        exceptionHandler(ex);
                     if (!continueOnError)
                         throw;
                 }
@@ -76,7 +76,6 @@ namespace ObserverPatternLikeMediatR.Concrete
             }
 
             return handlerInstance;
-
         }
     }
 }

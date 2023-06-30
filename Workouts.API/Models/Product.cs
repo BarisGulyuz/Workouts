@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-using Workouts.API.Attibutes;
 
 namespace Workouts.API.Models
 {
-    public class Product
+    public class Product : BaseEntity, IDeletableEntity
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
@@ -16,10 +14,5 @@ namespace Workouts.API.Models
         public int ProductionYear { get; set; }
 
         public Category Category { get; set; }
-
-        public bool Validate()
-        {
-            return true;
-        }
     }
 }
