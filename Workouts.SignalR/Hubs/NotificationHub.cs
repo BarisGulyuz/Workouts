@@ -2,6 +2,10 @@
 
 namespace Workouts.SignalR.Hubs
 {
+    /// <summary>
+    /// Workouts.SignalR.Hubs.Program.cs /notificate enpoint
+    /// UI/signalR.html
+    /// </summary>
     public class NotificationHub : Hub
     {
         const string NOTIFICATIN_METHOD_NAME = "ReceiveNotification";

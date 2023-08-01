@@ -42,7 +42,7 @@ namespace Workouts.API.Middlewares
             if (exception is BusinessException || exception is ValidationException)
             {
                 statusCode = HttpStatusCode.BadRequest;
-                exceptionMessage = String.Concat(exception.Data.Values);
+                exceptionMessage = String.Join(",", exception.Data.Values);
             }
 
             return new(exceptionMessage, statusCode);

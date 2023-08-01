@@ -47,7 +47,7 @@ namespace Workouts.API.Controllers
             user.RefreshToken = token.refreshToken;
             await _workoutContext.SaveChangesAsync();
 
-            return Ok();
+            return Ok(token);
         }
     }
 }
