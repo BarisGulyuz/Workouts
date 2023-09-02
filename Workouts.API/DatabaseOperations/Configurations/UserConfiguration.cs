@@ -18,7 +18,7 @@ namespace Workouts.API.DatabaseOperations.Configurations
             builder.HasIndex(x => x.Id);
             builder.Property(x => x.Id).IsRequired();
 
-            builder.Property(x => x.Name).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.UserName).HasMaxLength(100).IsRequired();
             builder.Property(x => x.Password)
                     .HasMaxLength(200).IsRequired();
 

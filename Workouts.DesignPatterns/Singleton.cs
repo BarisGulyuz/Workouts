@@ -76,7 +76,6 @@ namespace Workouts.DesignPatterns
         int Method1();
     }
 
-
 }
 
 

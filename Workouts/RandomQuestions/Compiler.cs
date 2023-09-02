@@ -1,40 +1,30 @@
-﻿
-
-namespace Workouts.RandomQuestions
+﻿namespace Workouts.RandomQuestions
 {
     public class Compiler
     {
-        public List<Project> CompiledProjects = new List<Project>();
+        public List<Project> CompiledProjects;
 
-        public List<Project> ProjectsForCompile = Dummy.GetProjects();
-
-        public void Compile()
+        public Compiler()
         {
-            foreach (var project in ProjectsForCompile)
-            {
-                if (!CompiledProjects.Contains(project))
-                {
-                    Compile(project);
-                }
-
-            }
+            CompiledProjects = new List<Project>();
         }
-        private void Compile(Project project)
+
+        public void Compile(Project project)
         {
-            foreach (Project project1 in project.Dependencies)
+            foreach (Project dependency in project.Dependencies)
             {
-                if (!CompiledProjects.Contains(project1))
+                if (!CompiledProjects.Any(c => c.Name == dependency.Name))
                 {
-                    Compile(project1);
+                    Compile(dependency);
                 }
             }
-
             project.Compile();
 
             CompiledProjects.Add(project);
         }
     }
 
+    #region Data
     public class Project
     {
         public Project(string name, params Project[] projects)
@@ -55,7 +45,6 @@ namespace Workouts.RandomQuestions
             Console.WriteLine(Name + "Compiled");
         }
     }
-
     static class Dummy
     {
         public static List<Project> GetProjects()
@@ -67,5 +56,9 @@ namespace Workouts.RandomQuestions
 
             return new List<Project> { project4, project3, project2, project };
         }
+
+        public static Project GetProject(string name) => GetProjects().First(p => p.Name == name);
     }
+
+    #endregion
 }

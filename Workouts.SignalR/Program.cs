@@ -19,7 +19,6 @@ servies.AddCors(opt =>
 
 var app = builder.Build();
 
-
 app.MapPost("/notificate", async (string notificationMessage, IServiceProvider sp) =>
 {
     NotificationHub notificationHub = sp.GetRequiredService<NotificationHub>();

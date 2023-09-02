@@ -24,7 +24,7 @@ namespace Workouts.API.JWT
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name,user.Name),
+                new Claim(ClaimTypes.Name,user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
@@ -43,7 +43,6 @@ namespace Workouts.API.JWT
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             string token = tokenHandler.WriteToken(securityToken);
-
 
             return new Token
                          (token,

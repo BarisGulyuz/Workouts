@@ -48,7 +48,6 @@ namespace Workouts.API.Middlewares
             return new(exceptionMessage, statusCode);
         }
     }
-
     public static class ExceptionMiddlewareExtensions
     {
         public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder)

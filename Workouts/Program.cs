@@ -1,7 +1,6 @@
 ﻿using Workouts.MiniMapper;
 using Workouts.ApplicationModels;
 using Workouts;
-using Workouts.ToPaginate;
 using Workouts.Mail;
 using Workouts.Mail.DummyTemplate;
 using Workouts.Expressions;
@@ -12,10 +11,13 @@ using Workouts.DesignPatterns;
 using User = Workouts.ApplicationModels.User;
 using Workouts.RandomQuestions;
 using Workouts.ListToHtmlTable;
-using Workouts.FileOperations;
 using ObserverPatternLikeMediatR.Concrete;
 using static Workouts.ApplicationModels.ObserverPatternModel.ObserverPatternModel;
 using System.Reflection;
+using static Workouts.BusinessRuleLogic.BusinessRuleObjects;
+using Product = Workouts.ApplicationModels.Product;
+using Workouts.BusinessRuleLogic;
+using Workouts.Extensions;
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -73,11 +75,11 @@ List<ExpressionModel> expressionModels1 = new List<ExpressionModel>
     new ExpressionModel() {ColumnName = "BanknoteSelling",OperatorEnum= OperatorEnum.Contains, Value="1"}
 };
 
-var expression = new MyExpression<Currency>(isAndConjunction: true).GetExpression(expressionModels);
+var expression = new MyExpression<Currency>().GetExpression(expressionModels, useAnd : false);
 List<Currency> newCurrencies = currencies2.AsQueryable().Where(expression).ToList();
 
 
-var expression2 = new MyExpression<Currency>().GetExpression(expressionModels1);
+var expression2 = new MyExpression<Currency>().GetExpression(expressionModels1, useAnd: false);
 List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToList();
 
 //Exception
@@ -115,7 +117,11 @@ List<Currency> newCurrencies2 = currencies1.AsQueryable().Where(expression2).ToL
 //Console.WriteLine(isUSer1And4Equal);
 #endregion
 
-bool v = Workouts.ExcelReport.Reporter.ExportToExcel(data.GetCurrenyData());
+#region Excel Report
+
+//bool v = Workouts.ExcelReport.Reporter.ExportToExcel(data.GetCurrenyData());
+
+#endregion
 
 #region HttpReq With Token
 if (httpReqEnable)
@@ -196,6 +202,7 @@ Console.WriteLine(SingletonClass.Instance.Method1());
 
 #endregion
 
+#region TaskWhenAll
 
 int countst = 0;
 while (true)
@@ -217,6 +224,9 @@ while (true)
     }
 }
 
+#endregion
+
+#region Password Builder
 
 //Workouts.DesignPatterns.PatternWorkouts.Builder.PasswordBuilder passwordBuilder = new();
 //passwordBuilder.AddCharacterSet(Workouts.DesignPatterns.PatternWorkouts.Builder.PasswordCharacterType.All, 1);
@@ -237,30 +247,59 @@ while (true)
 
 //Console.WriteLine(passwordBuilder.AddCharacterSet("ABC", 10).Build());
 
+#endregion
 
 #region Dependency Compiler 
 
 Compiler compiler = new();
-compiler.Compile();
+compiler.Compile(project : Dummy.GetProject("Project4"));
+compiler.Compile(project : Dummy.GetProject("Project2"));
 
 #endregion
 
+#region Event Handler
 
 MyEventHandler eventHandler = new MyEventHandler(Assembly.GetExecutingAssembly());
 
 eventHandler.Notify(new UserCreated { Id = 1 });
 eventHandler.Notify(new UserCreated { Id = 2 }, false, (ex) => { Console.WriteLine(ex.ToString()); });
 
+#endregion
+
+#region HTML Table
+
 string htmlCurrencyTable = data.GetCurrenyData().ToHtmlTable();
 string htmlCurencyTableColorod = data.GetCurrenyData().ToHtmlTable(tableHeadBgColor: "#6096B4");
 
 string allHtml = htmlCurrencyTable + htmlCurencyTableColorod;
 
+#endregion
+
+#region GetInstace With Dependencies
+
 B bInstance = new WorstContainer().GetIstance<B>();
 bInstance.AMethod();
 
+#endregion
 
-//FileOperations.Word.FindAllWrongs("C:\\Users\\bar77\\OneDrive\\Masaüstü\\Proje.docx");
+#region Business Rule
+
+try
+{
+    Workouts.BusinessRuleLogic.Product.Product productX = new Workouts.BusinessRuleLogic.Product.Product(1, "Elma", 1, 21321);
+
+    Workouts.BusinessRuleLogic.Product.ProductService productService = new Workouts.BusinessRuleLogic.Product.ProductService();
+
+    productService.Add(productX);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.ToString());
+}
+
+
+#endregion
+
 
 Console.ReadKey();
 

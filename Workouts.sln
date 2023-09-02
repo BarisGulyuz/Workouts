@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.DesignPatterns", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.DataStructures", "Workouts.DataStructures\Workouts.DataStructures.csproj", "{EA3B8639-EB4D-45B9-8D09-7A356E96EB90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workouts.RabbitMQ", "Workouts.RabbitMQ\Workouts.RabbitMQ.csproj", "{1FE11164-B699-403D-AE07-A02BF1EC16D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.RabbitMQ", "Workouts.RabbitMQ\Workouts.RabbitMQ.csproj", "{1FE11164-B699-403D-AE07-A02BF1EC16D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workouts.SignalR", "Workouts.SignalR\Workouts.SignalR.csproj", "{11D2572A-7EF1-4386-85E5-EAA663B66966}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.SignalR", "Workouts.SignalR\Workouts.SignalR.csproj", "{11D2572A-7EF1-4386-85E5-EAA663B66966}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{9CFFAC72-C186-47EF-BAEF-FE314510196D}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +22,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{9CFFAC72-C186-
 		UI\signalr.min.js = UI\signalr.min.js
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workouts.BackgroundServices", "Workouts.BackgroundServices\Workouts.BackgroundServices.csproj", "{C08A8F8C-9357-47D5-AD2E-A954FD92B149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Workouts.BackgroundServices", "Workouts.BackgroundServices\Workouts.BackgroundServices.csproj", "{C08A8F8C-9357-47D5-AD2E-A954FD92B149}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3DB88DD5-FDC7-4676-85F4-F1BE86669CAC}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

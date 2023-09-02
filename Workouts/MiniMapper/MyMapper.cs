@@ -1,6 +1,4 @@
-﻿
-
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Workouts.MiniMapper
 {
@@ -26,8 +24,6 @@ namespace Workouts.MiniMapper
 
             return null;
         }
-
-
         public static List<T> MapList(IEnumerable<object> baseObject)
         {
             if (baseObject != null)
@@ -36,6 +32,7 @@ namespace Workouts.MiniMapper
                 PropertyInfo[] propertyInfos = t.GetType().GetProperties();
 
                 List<T> ts = (List<T>)Activator.CreateInstance(typeof(List<T>), new object[] { });
+
                 foreach (var item in baseObject)
                 {
                     t = (T)Activator.CreateInstance(typeof(T), new object[] { });
@@ -47,11 +44,10 @@ namespace Workouts.MiniMapper
                     }
 
                     ts.Add(t);
-
                 }
+
                 return ts;
             }
-
             return null;
         }
 
@@ -70,6 +66,7 @@ namespace Workouts.MiniMapper
         {
             objectToMapped.GetType().GetProperty(propName).SetValue(objectToMapped, value);
         }
+
         #endregion
     }
 }

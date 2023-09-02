@@ -22,28 +22,40 @@ namespace ObserverPatternLikeMediatR.Concrete
         {
             _assembly = assembly;
         }
-        public void Notify(IEvent @event, bool continueOnError = false, Action<Exception> exceptionHandler = null)
-        {
-            EventCollection currentEventInfo = EventCollection.FirstOrDefault(e => e.Event == @event.GetType());
-            if (currentEventInfo == null)
-                throw new Exception("We cant find to notify object");
 
+        public void Notify(IEvent @event) => NotifyEvent(@event);
+        public void Notify(IEvent @event, bool continueOnError) => NotifyEvent(@event, continueOnError);
+        public void Notify(IEvent @event, bool continueOnError, Action<Exception> exceptionHandler) => NotifyEvent(@event, continueOnError, exceptionHandler);
+
+        private void NotifyEvent(IEvent @event, bool continueOnError = true, Action<Exception> exceptionHandler = null)
+        {
+            ArgumentNullException.ThrowIfNull(@event);
+
+            EventCollection currentEventInfo = EventCollection.FirstOrDefault(e => e.Event == @event.GetType());
             foreach (Type handlerType in currentEventInfo.EventHandlers)
             {
                 try
                 {
                     var handlerInstance = GetHandlerIstance(handlerType);
-                    _ = handlerInstance.GetType().GetMethod(HANDLE_METHOD_NAME).Invoke(handlerInstance, new object[] { @event });
+                    _ = handlerInstance.GetType()
+                                       .GetMethod(HANDLE_METHOD_NAME)
+                                       .Invoke(handlerInstance, new object[] { @event });
                 }
                 catch (Exception ex)
                 {
                     if (exceptionHandler != null)
                         exceptionHandler(ex);
+                    else
+                    {
+                        //log exception here
+                    }
+
                     if (!continueOnError)
                         throw;
                 }
             }
         }
+
         private static List<EventCollection> FindEvents()
         {
             List<EventCollection> eventCollections = new List<EventCollection>();
@@ -58,7 +70,7 @@ namespace ObserverPatternLikeMediatR.Concrete
 
                 List<Type> handlers = _assembly.GetTypes()
                                                .Where(t => genericEventHandlerType.IsAssignableFrom(t))
-                                                .ToList();
+                                               .ToList();
 
                 eventCollections.Add(new EventCollection(type, handlers));
             }

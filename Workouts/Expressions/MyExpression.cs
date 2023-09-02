@@ -1,110 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Workouts.Expressions
 {
     //not completed - on-progress
     public class MyExpression<T>
     {
-        public bool IsAndConjunction { get; set; } //make enum
-        public MyExpression()
+        public Expression<Func<T, bool>> GetExpression(List<ExpressionModel> expressionModels, bool useAnd)
         {
-            IsAndConjunction = false;
-        }
-        public MyExpression(bool isAndConjunction)
-        {
-            this.IsAndConjunction = isAndConjunction;
-        }
-        public Expression<Func<T, bool>> GetExpression(List<ExpressionModel> expressionModels)
-        {
-            if (expressionModels.Count == 0 || expressionModels == null)
+            if (expressionModels == null || expressionModels.Count == 0)
             {
-                throw new Exception($"Expression Model Can Not Be Empty");
+                throw new ArgumentException("ExpressionModels CanNot Be Empty Or Null");
             }
 
-            ParameterExpression entityParameter = Expression.Parameter(typeof(T), "x");
+            var parameter = Expression.Parameter(typeof(T), "x");
+            Expression expression = null;
 
-            List<Expression> expressions = CreateExpression(expressionModels, entityParameter);
-
-            Expression finalExpression = null;
-
-            if (expressions.Count == 1)
+            foreach (var condition in expressionModels)
             {
-                finalExpression = expressions.FirstOrDefault();
-            }
-            else
-            {
-                if (IsAndConjunction)
+                Expression currentExpression = CreateExpression(parameter, condition);
+
+                if (expression == null)
                 {
-                    for (int i = 0; i < expressions.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            finalExpression = Expression.AndAlso(expressions[i], expressions[i + 1]);
-                        }
-                        else if (i < expressions.Count - 1)
-                        {
-                            finalExpression = Expression.AndAlso(finalExpression, expressions[i + 1]);
-                        }
-                    }
+                    expression = currentExpression;
                 }
                 else
                 {
-                    for (int i = 0; i < expressions.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            finalExpression = Expression.OrElse(expressions[i], expressions[i + 1]);
-                        }
-                        else if (i < expressions.Count - 1)
-                        {
-                            finalExpression = Expression.OrElse(finalExpression, expressions[i + 1]);
-                        }
-                    }
+                    expression = useAnd ? Expression.AndAlso(expression, currentExpression)
+                                        : Expression.OrElse(expression, currentExpression);
                 }
-
             }
 
-            return Expression.Lambda<Func<T, bool>>(finalExpression, entityParameter);
-
+            return Expression.Lambda<Func<T, bool>>(expression, parameter);
         }
-
-        private List<Expression> CreateExpression(List<ExpressionModel> expressionModels, ParameterExpression entityParameter)
+        private static Expression CreateExpression(ParameterExpression parameter, ExpressionModel condition)
         {
-            List<Expression> expressions = new List<Expression>();
-            foreach (ExpressionModel expressionModel in expressionModels)
+            var member = Expression.PropertyOrField(parameter, condition.ColumnName);
+            var constant = Expression.Constant(condition.Value);
+            Expression currentExpression = null;
+
+            switch (condition.OperatorEnum)
             {
-                MemberExpression property = Expression.Property(entityParameter, expressionModel.ColumnName);
-
-                Expression expression = null;
-                switch (expressionModel.OperatorEnum)
-                {
-                    case OperatorEnum.Equal:
-                        expression = Expression.Equal(property, Expression.Constant(expressionModel.Value));
-                        break;
-                    case OperatorEnum.GreaterThanOrEqual:
-                        expression = Expression.GreaterThanOrEqual(property, Expression.Constant(expressionModel.Value));
-                        break;
-                    case OperatorEnum.LessThanOrEqual:
-                        expression = Expression.LessThanOrEqual(property, Expression.Constant(expressionModel.Value));
-                        break;
-                    case OperatorEnum.Contains:
-                        MethodInfo containsMethod = typeof(string).GetMethods().First(m => m.Name == "Contains" && m.GetParameters().Length == 1);
-                        expression = Expression.Call(property, containsMethod, Expression.Constant(expressionModel.Value));
-                        break;
-                }
-
-                expressions.Add(expression);
+                case OperatorEnum.Equal:
+                    currentExpression = Expression.Equal(member, constant);
+                    break;
+                case OperatorEnum.NotEqual:
+                    currentExpression = Expression.NotEqual(member, constant);
+                    break;
+                case OperatorEnum.LessThan:
+                    currentExpression = Expression.LessThan(member, constant);
+                    break;
+                case OperatorEnum.LessThanOrEqual:
+                    currentExpression = Expression.LessThanOrEqual(member, constant);
+                    break;
+                case OperatorEnum.GreaterThan:
+                    currentExpression = Expression.GreaterThan(member, constant);
+                    break;
+                case OperatorEnum.GreaterThanOrEqual:
+                    currentExpression = Expression.GreaterThanOrEqual(member, constant);
+                    break;
+                case OperatorEnum.Contains:
+                    MethodInfo containsMethod = typeof(string).GetMethods().First(m => m.Name == "Contains" && m.GetParameters().Length == 1);
+                    currentExpression = Expression.Call(member, containsMethod, constant);
+                    break;
             }
 
-            return expressions;
+            return currentExpression;
         }
-
-
     }
 }

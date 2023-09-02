@@ -13,7 +13,6 @@ namespace Workouts.XML
                 return stringWriter.ToString();
             }
         }
-
         public static T LoadFromXMLString<T>(string xmlText) where T : class, new()
         {
             using (var stringReader = new StringReader(xmlText))

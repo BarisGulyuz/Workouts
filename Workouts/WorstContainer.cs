@@ -5,7 +5,6 @@
         static Dictionary<Type, Type> Dependencies = new Dictionary<Type, Type>();
         public WorstContainer()
         {
-
             Dependencies.Add(typeof(IA), typeof(A));
             Dependencies.Add(typeof(IC), typeof(D));
         }
@@ -28,7 +27,7 @@
                     ArgumentNullException.ThrowIfNull(targetObj);
 
                     var getInstanceMethod = typeof(WorstContainer).GetMethod(nameof(GetIstance))
-                                                                .MakeGenericMethod(targetObj);
+                                                                  .MakeGenericMethod(targetObj);
 
                     parameters[posisition] = getInstanceMethod.Invoke(this, null);
                 }
@@ -36,6 +35,8 @@
             return (T)Activator.CreateInstance(typeof(T), parameters);
         }
     }
+
+    #region C
 
     public interface IC
     {
@@ -48,6 +49,11 @@
             Console.WriteLine($" {nameof(C)} --> IC interfaceinden implent alınan C methodu çalıştı");
         }
     }
+
+    #endregion
+
+    #region D
+
     public class D : IC
     {
         void IC.C()
@@ -55,6 +61,10 @@
             Console.WriteLine($" {nameof(D)} -->  IC interfaceinden implent alınan C methodu çalıştı");
         }
     }
+
+    #endregion
+
+    #region A
     public interface IA
     {
         void A();
@@ -75,6 +85,10 @@
             _c.C();
         }
     }
+
+    #endregion
+
+    #region B
     public class B
     {
         private readonly IA _a;
@@ -86,6 +100,8 @@
 
         public void AMethod() => _a.A();
     }
+
+    #endregion
 
 
 }

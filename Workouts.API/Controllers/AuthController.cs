@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Workouts.API.DatabaseOperations;
 using Workouts.API.JWT;
 using Workouts.API.Models;
@@ -19,10 +20,10 @@ namespace Workouts.API.Controllers
         }
 
         [HttpPost("create-user")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateUser(CreateUserDto createUserDto)
         {
             //validations
-
             User user = Models.User.CreateFromCreateUserDto(createUserDto);
             user.Password = createUserDto.Password; // hash password ...
 
@@ -33,11 +34,11 @@ namespace Workouts.API.Controllers
         }
 
         [HttpPost("sign-in")]
+        [AllowAnonymous]
         public async Task<IActionResult> SignIn(LoginDto loginDto)
         {
-            User user = _workoutContext.Users
-                                        .FirstOrDefault(u => u.Email == loginDto.Email
-                                                          && u.Password == loginDto.Password); // hash password before this and check....
+            User user = _workoutContext.Users.FirstOrDefault(u => u.Email == loginDto.Email
+                                                            && u.Password == loginDto.Password); // hash password before this and check....
 
             if (user == null)
                 return Unauthorized();

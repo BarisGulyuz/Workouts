@@ -9,6 +9,7 @@ namespace Workouts.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly WorkoutContext dbContext;
@@ -24,9 +25,6 @@ namespace Workouts.API.Controllers
             //check validation
 
             Category category = Category.CreateFromCategoryCreateDto(categoryDto);
-            category.CreatedAt = DateTime.Now;
-            category.ModifiedAt = DateTime.Now;
-            category.IsActive = true;
 
             await dbContext.Categories.AddAsync(category);
             await dbContext.SaveChangesAsync();
@@ -48,7 +46,7 @@ namespace Workouts.API.Controllers
             }
 
             category.Name = updateCategoryDto.Name;
-            category.ModifiedAt = DateTime.Now;
+            category.ModifiedDate = DateTime.Now;
 
             await dbContext.SaveChangesAsync();
 

@@ -76,6 +76,8 @@ builder.Services.AddSwaggerGen(options =>
 
 #endregion;
 
+builder.Services.AddHttpContextAccessor();
+
 #region Db Access
 
 builder.Services.AddSingleton<AuditEntityInterceptor>();

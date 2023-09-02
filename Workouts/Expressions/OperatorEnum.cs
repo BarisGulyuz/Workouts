@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Workouts.Expressions
+﻿namespace Workouts.Expressions
 {
     public enum OperatorEnum
     {
        Equal,
+       NotEqual,
        GreaterThanOrEqual,
        LessThanOrEqual,
-       Contains
-       //........
+       Contains,
+        GreaterThan,
+        LessThan
+        //........
     }
+
 }

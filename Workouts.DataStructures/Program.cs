@@ -15,7 +15,6 @@ Console.WriteLine(next); //Baris
 
 #endregion
 
-
 #region Stack
 
 MyStack<int> stack = new MyStack<int>(10);
