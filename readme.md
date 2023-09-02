@@ -1,6 +1,6 @@
 # C# - .NET Workouts
 
-Bu repo, geliþi güzel çalýþmalar, denemeler, elbet birgün faydalý olabileceðine ve toplanabileceðine inandýðým daðýnýk kodlar içerir.
+Bu repo, gelisi güzel calismalar, denemeler, elbet birgün faydali olabilecegine ve toplanabilecegine inandigim ( :) ) daginik kodlar icerir.
 
 ### Exception Handler Middleware Workout
 
