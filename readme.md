@@ -1,6 +1,6 @@
 # C# - .NET Workouts
 
-Bu repo, gelişi güzel çalışmalar, denemeler, elbet birgün faydalı olabileceğine ve toplanabileceğine inandığım dağınık kodlar içerir.
+Bu repo, geliÃ¾i gÃ¼zel Ã§alÃ½Ã¾malar, denemeler, elbet birgÃ¼n faydalÃ½ olabileceÃ°ine ve toplanabileceÃ°ine inandÃ½Ã°Ã½m daÃ°Ã½nÃ½k kodlar iÃ§erir.
 
 ### Exception Handler Middleware Workout
 
@@ -8,7 +8,7 @@ Bu repo, gelişi güzel çalışmalar, denemeler, elbet birgün faydalı olabileceğine 
 
 ### Validation Filter Workout
 
-- [Link](https://github.com/BarisGulyuz/Workouts/blob/master/Workouts.API/Middlewares/ExceptionMiddleware.cs) 
+- [Link](https://github.com/BarisGulyuz/Workouts/blob/master/Workouts.API/Filters/ValidationFilter.cs) 
 
 ### EF SaveChanges() Interceptor Workout
 
