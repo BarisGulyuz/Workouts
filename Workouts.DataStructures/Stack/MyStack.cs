@@ -1,4 +1,9 @@
 ﻿namespace Workouts.DataStructures.Stack;
+
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class MyStack<T>
 {
     private const int DEFAULT_SIZE = 50;

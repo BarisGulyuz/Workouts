@@ -2,11 +2,11 @@ using Workouts.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-IServiceCollection servies = builder.Services;
-servies.AddSingleton<NotificationHub>();
+IServiceCollection services = builder.Services;
+services.AddSingleton<NotificationHub>();
 
-servies.AddSignalR();
-servies.AddCors(opt =>
+services.AddSignalR();
+services.AddCors(opt =>
 {
     opt.AddPolicy("Hub", policy =>
     {

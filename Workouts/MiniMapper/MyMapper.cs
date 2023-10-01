@@ -2,54 +2,34 @@
 
 namespace Workouts.MiniMapper
 {
-    public static class MyMapper<T> where T : class
+    public static class MyMapper<TSource, TDest> where TSource : class 
+                                                 where TDest : class
     {
         #region Map Methods
-        public static T Map(object sourceObject)
+        public static TDest Map(TSource sourceObject)
         {
+            TDest returnValue = default(TDest);
+
             if (sourceObject != null)
             {
-                T t = (T)Activator.CreateInstance(typeof(T), new object[] { });
-                PropertyInfo[] propertyInfos = t.GetType().GetProperties();
+                returnValue = (TDest)Activator.CreateInstance(typeof(TDest), new object[] { });
+                PropertyInfo[] propertyInfos = returnValue.GetType().GetProperties();
 
                 foreach (PropertyInfo property in propertyInfos)
                 {
-                    SetPropValue(t, property.Name, GetPropValue(sourceObject, property.Name));
-                }
-
-                return (T)Convert.ChangeType(t, typeof(T));
-            }
-            return null;
-        }
-        public static List<T> MapList(IEnumerable<object> sourceObject)
-        {
-            List<T> objectList = null;
-            if (sourceObject != null)
-            {
-                T obj = default(T);
-                PropertyInfo[] propertyInfos = obj.GetType().GetProperties();
-
-                objectList = (List<T>)Activator.CreateInstance(typeof(List<T>), new object[] { });
-
-                foreach (var item in sourceObject)
-                {
-                    obj = (T)Activator.CreateInstance(typeof(T), new object[] { });
-
-                    foreach (PropertyInfo property in propertyInfos)
-                    {
-                        SetPropValue(obj, property.Name, GetPropValue(item, property.Name));
-                    }
-
-                    objectList.Add(obj);
+                    SetPropValue(returnValue, property.Name, GetPropValue(sourceObject, property.Name));
                 }
             }
-            return objectList;
+
+            return returnValue;
         }
+        public static List<TDest> Map(IEnumerable<TSource> sourceObjects)
+                            => sourceObjects.Select(o => Map(o)).ToList();
 
         #endregion
 
         #region GetValue - SetValue
-        private static object GetPropValue(object sourceObject, string propName)
+        private static object GetPropValue(TSource sourceObject, string propName)
         {
             PropertyInfo propertyInfo = sourceObject.GetType().GetProperty(propName);
             if (propertyInfo is null)
@@ -57,11 +37,13 @@ namespace Workouts.MiniMapper
 
             return propertyInfo.GetValue(sourceObject, null);
         }
-        private static void SetPropValue(object objectToMapped, string propName, object value)
+        private static void SetPropValue(TDest destObject, string propName, object value)
         {
-            objectToMapped.GetType().GetProperty(propName).SetValue(objectToMapped, value);
+            destObject.GetType().GetProperty(propName)
+                                .SetValue(destObject, value);
         }
 
         #endregion
     }
+
 }

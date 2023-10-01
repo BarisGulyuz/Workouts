@@ -13,20 +13,22 @@ namespace Workouts.FileOperations
         }
         static List<string> TurkishSpellCheck(string text)
         {
-            List<string> mistakes = new List<string>();
-            string[] words = Regex.Split(text, @"\W+");
+            //List<string> mistakes = new List<string>();
+            //string[] words = Regex.Split(text, @"\W+");
 
-            using var dictionaryStream = File.OpenRead(@"tr_TR.dic");
-            using var affixStream = File.OpenRead(@"tr_TR.aff");
-            var dictionary = WordList.CreateFromStreams(dictionaryStream, affixStream);
+            //using var dictionaryStream = File.OpenRead(@"tr_TR.dic");
+            //using var affixStream = File.OpenRead(@"tr_TR.aff");
+            //var dictionary = WordList.CreateFromStreams(dictionaryStream, affixStream);
 
-            foreach (var word in words)
-            {
-                if (dictionary.Check(word)) 
-                    mistakes.Add(word);
-            }
+            //foreach (var word in words)
+            //{
+            //    if (dictionary.Check(word)) 
+            //        mistakes.Add(word);
+            //}
 
-            return mistakes;
+            //return mistakes;
+
+            return new List<string>();
         }
     }
 }

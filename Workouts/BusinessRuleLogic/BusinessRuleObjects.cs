@@ -53,6 +53,7 @@ namespace Workouts.BusinessRuleLogic
         }
 
         #endregion
+
         public class BusinessRuleManager
         {
             public static ChainOfBusinessRuleResponse Control(bool stopOnFirstError, params Func<BusinessRuleResponse>[] rules)

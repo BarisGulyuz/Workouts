@@ -26,7 +26,6 @@ namespace Workouts.API.Results.Response
         }
         public static Response<T> CreateSuccessResponse(T value, string message) => CreateReponse(value, message, ResultType.Success);
         public static Response<T> CreateErrorResponse(T value, string message) => CreateReponse(value, message, ResultType.Error);
-
     }
 
     public class Response

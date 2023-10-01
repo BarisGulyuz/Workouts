@@ -52,5 +52,12 @@ namespace Workouts.API.JWT
         }
 
         private string GenereateRefreshToken() => Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        private string GenereateRefreshToken2()
+        {
+            byte[] numberByte = new byte[32];
+            using var random = RandomNumberGenerator.Create();
+            random.GetBytes(numberByte);
+            return Convert.ToBase64String(numberByte);
+        }
     }
 }

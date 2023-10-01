@@ -48,9 +48,11 @@ namespace Workouts.ListToHtmlTable
             foreach (PropertyInfo prop in targetProps)
             {
                 htmlTableInfoAttribute = prop.GetCustomAttribute(typeof(HtmlTableColumnInfo)) as HtmlTableColumnInfo;
-                tableInfoData.Add(new TableInfoModel(htmlTableInfoAttribute.Order, prop.Name,
+                tableInfoData.Add(new TableInfoModel(htmlTableInfoAttribute.Order, 
+                                                     prop.Name,
                                                      htmlTableInfoAttribute.ColumnName ?? prop.Name,
-                                                     htmlTableInfoAttribute.DatePattern, htmlTableInfoAttribute.MoneyPattern));
+                                                     htmlTableInfoAttribute.DatePattern, 
+                                                     htmlTableInfoAttribute.MoneyPattern));
             }
             tableInfoData = tableInfoData.OrderBy(d => d.Order).ToList();
 

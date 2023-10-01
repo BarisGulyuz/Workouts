@@ -9,7 +9,7 @@ namespace Workouts.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly WorkoutContext dbContext;
@@ -53,7 +53,6 @@ namespace Workouts.API.Controllers
             return NoContent();
         }
 
-
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(int categoryId)
         {
@@ -73,6 +72,10 @@ namespace Workouts.API.Controllers
         //[Authorize]
         public async Task<IActionResult> SelectAll()
             => Ok(await dbContext.Categories.ToListAsync());
+
+        [HttpGet("{categoryId}")]
+        public async Task<IActionResult> Get(int categoryId)
+            => Ok(await dbContext.Categories.FindAsync(categoryId));
 
     }
 }

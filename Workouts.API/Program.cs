@@ -95,6 +95,16 @@ builder.Services.AddDbContext<WorkoutContext>((sp, optBuilder) =>
 
 #endregion
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("Default", policy =>
+    {
+        //policy.AllowCredentials();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowAnyOrigin();
+    });
+});
 
 var app = builder.Build();
 
@@ -107,7 +117,7 @@ if (context.Database.GetPendingMigrations().Any())
 
 #endregion
 
-
+app.UseCors("Default");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

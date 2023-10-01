@@ -18,6 +18,27 @@ using static Workouts.BusinessRuleLogic.BusinessRuleObjects;
 using Product = Workouts.ApplicationModels.Product;
 using Workouts.BusinessRuleLogic;
 using Workouts.Extensions;
+using static Workouts.DesignPatterns.Factory;
+using NPOI.SS.UserModel;
+using static Workouts.DesignPatterns.FactoryMethod;
+
+
+#region Factory Test
+
+ICreditCard silverCard = CreditCardFactory.Create(CreaditCardType.Silver);
+ICreditCard platinumCard = CreditCardFactory.Create(CreaditCardType.Platinum);
+
+Console.WriteLine(silverCard.GetFullInfo());
+Console.WriteLine(platinumCard.GetFullInfo());
+
+
+InterbankPaymentManager interbankPaymentManager = new InterbankPaymentManager();
+interbankPaymentManager.DoPayment(PaymentType.EFT);
+interbankPaymentManager.DoPayment(PaymentType.FAST);
+
+return;
+#endregion
+
 
 Data data = new Data();
 bool httpReqEnable = false;
@@ -25,10 +46,11 @@ bool httpReqEnable = false;
 #region Mapper
 
 Currency currency = new Currency() { Name = "Deneme", BanknoteSelling = "100" };
-CurrencyDto currencyDto = MyMapper<CurrencyDto>.Map(currency);
+CurrencyDto currencyDto = MyMapper<Currency,CurrencyDto>.Map(currency);
+
 
 List<Currency> currencies = data.GetCurrenyData();
-List<CurrencyDto> currencyDtos = MyMapper<CurrencyDto>.MapList(currencies);
+List<CurrencyDto> currencyDtos = MyMapper<Currency,CurrencyDto>.Map(currencies);
 
 #endregion
 
@@ -210,7 +232,6 @@ while (true)
     countst++;
     Product product = new Product();
 
-
     var task1 = Task.Run(async () => { await product.AddStock(2); });
     var task2 = Task.Run(async () => { await product.AddStock(3); });
     var task3 = Task.Run(async () => { await product.RemoveStock(5); });
@@ -299,7 +320,6 @@ catch (Exception ex)
 
 
 #endregion
-
 
 Console.ReadKey();
 

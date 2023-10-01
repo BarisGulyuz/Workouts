@@ -2,6 +2,15 @@
 
 namespace Workouts.BusinessRuleLogic.Product
 {
+    public static class Data
+    {
+        public static List<Product> Products = new List<Product>
+            {
+                new Product(1,"Elma", 1, 10),
+                new Product(2,"Armut", 1, 20),
+            };
+    }
+
     public sealed class Product
     {
         public Product()
@@ -23,12 +32,6 @@ namespace Workouts.BusinessRuleLogic.Product
     }
     public class ProductBusinessRule
     {
-        static List<Product> Products = new List<Product>
-            {
-                new Product(1,"Elma", 1, 10),
-                new Product(2,"Armut", 1, 20),
-            };
-
         const int MIN_STOCK = 5;
         const int MAX_STOCK = 1000;
         const int MAX_PRODCUCT_COUNT_FOREACH_CATEGORY = 5;
@@ -43,7 +46,7 @@ namespace Workouts.BusinessRuleLogic.Product
         public BusinessRuleResponse CheckProductCategoryCount()
         {
             BusinessRuleResponse businessRuleResponse = new BusinessRuleResponse();
-            if (Products.Where(p => p.CategoryId == _product.CategoryId).Count() > MAX_PRODCUCT_COUNT_FOREACH_CATEGORY)
+            if (Data.Products.Where(p => p.CategoryId == _product.CategoryId).Count() > MAX_PRODCUCT_COUNT_FOREACH_CATEGORY)
             {
                 string message = $"Bu kategoride hali hazırda {MAX_PRODCUCT_COUNT_FOREACH_CATEGORY} adet ürün var. Daha fazla eklenemez";
                 businessRuleResponse.AddError(message);
@@ -70,7 +73,7 @@ namespace Workouts.BusinessRuleLogic.Product
         public BusinessRuleResponse CheckProductName()
         {
             BusinessRuleResponse businessRuleResponse = new BusinessRuleResponse();
-            if (Products.Any(p => p.Name == _product.Name))
+            if (Data.Products.Any(p => p.Name == _product.Name))
             {
                 string message = "Bu isimde ürün mevcut";
                 businessRuleResponse.AddError(message);
@@ -116,7 +119,7 @@ namespace Workouts.BusinessRuleLogic.Product
 
         public void AddStock(int productId, int stock)
         {
-            Product product = Products.First(p => p.Id == productId);
+            Product product = Data.Products.First(p => p.Id == productId);
 
             if (product is null)
             {

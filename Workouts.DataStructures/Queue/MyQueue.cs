@@ -1,5 +1,9 @@
 ﻿namespace Workouts.DataStructures.Queue
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class MyQueue<T>
     {  
         private const int DEFAULT_SIZE = 50;

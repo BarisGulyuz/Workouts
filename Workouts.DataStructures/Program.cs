@@ -1,4 +1,5 @@
-﻿using Workouts.DataStructures.Queue;
+﻿using Workouts.DataStructures.LinkedList;
+using Workouts.DataStructures.Queue;
 using Workouts.DataStructures.Stack;
 
 #region Queue
@@ -10,7 +11,7 @@ queue.Enqueue("Zeynep");
 
 string next = queue.Dequeue();
 
-Console.WriteLine(next); //Baris
+//Console.WriteLine(next); //Baris
 
 
 #endregion
@@ -24,8 +25,27 @@ stack.Push(2);
 
 int next2 = stack.Pop();
 
-Console.WriteLine(next2); //2
+//Console.WriteLine(next2); //2
 
+
+#endregion
+
+#region LinkedList
+
+MyLinkedList<int> linkedList = new MyLinkedList<int>();
+
+linkedList.AddFirst(1);
+
+linkedList.AddLast(2);
+
+linkedList.AddFirst(3);
+
+foreach (var item in linkedList)
+{
+    Console.WriteLine(item);
+}
+
+// 3 1 2
 
 #endregion
 
